@@ -1,1 +1,347 @@
+---
+title: "Image Compression Results"
+output:
+    html_document:
+      toc: true
+      toc_float: true
+---
 
+# Code for Image Compression
+```{r results='hide', warning=FALSE, message=FALSE}
+library(readr)
+library(tidyverse)
+
+image1 <- read.csv("~/SDS365/image_compression/HW2imagefiles/image1.csv")
+image2 <- read.csv("~/SDS365/image_compression/HW2imagefiles/image2.csv")
+image3 <- read.csv("~/SDS365/image_compression/HW2imagefiles/image3.csv")
+image4 <- read.csv("~/SDS365/image_compression/HW2imagefiles/image4.csv")
+
+image1 <- data.matrix(image1)
+image2 <- data.matrix(image2)
+image3 <- data.matrix(image3)
+image4 <- data.matrix(image4)
+
+image_error <- function(M, M_k){
+  # Frobenius norm of difference X - X_k
+  error_k <- norm(M - M_k, type = "F")
+  return (error_k)
+}
+
+compress_image <- function(k, M){
+  # Function takes n x p matrix M and integer k
+  # Returns: rank k approximation of image matrix using PCA
+  # and, error of rank k approximation w/Frobenius norm
+  
+  # Cross product of M
+  V <- crossprod(M, M)
+  
+  # Eigendecomposition of V
+  eigendecomp_V <- eigen(V)
+  
+  # Eigenvector matrix
+  U <- eigendecomp_V$vectors
+  
+  # PC Score matrix
+  Z <- M %*% U
+  
+  # Initialize rank approx
+  M_k <- matrix(0, nrow = nrow(M), ncol = ncol(M))
+  
+  # Rank approximation
+  for (i in 1:k){
+    M_k <- M_k + (Z[, i] %o% U[, i])
+  }
+  
+  # Frobenius norm of difference M - M_k
+  error_k <- image_error(M, M_k)
+  
+  return (list(M_k = M_k, error_k = error_k, U = U, Z = Z))
+}
+
+error_k <- function(M, k){
+  
+  # Cross product of M
+  V <- crossprod(M, M)
+  
+  # Eigendecomposition of V
+  eigendecomp_V <- eigen(V)
+  
+  # Eigenvector matrix
+  U <- eigendecomp_V$vectors
+  
+  # PC Score matrix
+  Z <- M %*% U
+  
+  # Initialize rank approx
+  M_k <- matrix(0, nrow = nrow(M), ncol = ncol(M))
+  
+  errors <- numeric(k)
+  
+  for (i in 1:k){
+    M_k <- M_k + (Z[, i] %o% U[, i])
+    errors[i] <- image_error(M, M_k)
+  }
+  
+  error_data <- data.frame(k = 1:k,
+                           error = errors)
+  
+  return (error_data)
+}
+```
+
+# Image 1
+## Original image
+```{r echo=FALSE, fig.align='center'}
+knitr::include_graphics("original_images/image1.png")
+```
+
+## Image Approximations
+### k = 1
+```{r echo=FALSE, fig.align='center'}
+knitr::include_graphics("image_approximations/image1_1.png")
+```
+
+### k = 2
+```{r echo=FALSE, fig.align='center'}
+knitr::include_graphics("image_approximations/image1_2.png")
+```
+
+### k = 3
+```{r echo=FALSE, fig.align='center'}
+knitr::include_graphics("image_approximations/image1_3.png")
+```
+
+### k = 4
+```{r echo=FALSE, fig.align='center'}
+knitr::include_graphics("image_approximations/image1_4.png")
+```
+
+### k = 5
+```{r echo=FALSE, fig.align='center'}
+knitr::include_graphics("image_approximations/image1_5.png")
+```
+
+### k = 6
+```{r echo=FALSE, fig.align='center'}
+knitr::include_graphics("image_approximations/image1_6.png")
+```
+
+### k = 7
+```{r echo=FALSE, fig.align='center'}
+knitr::include_graphics("image_approximations/image1_7.png")
+```
+
+### k = 8
+```{r echo=FALSE, fig.align='center'}
+knitr::include_graphics("image_approximations/image1_8.png")
+```
+
+### k = 9
+```{r echo=FALSE, fig.align='center'}
+knitr::include_graphics("image_approximations/image1_9.png")
+```
+
+### k = 10
+```{r echo=FALSE, fig.align='center'}
+knitr::include_graphics("image_approximations/image1_10.png")
+```
+
+The image approximation looks sufficient at k = 5, because at that point it captures more of the noise present in the original image.
+
+## K vs. Error plot
+```{r echo=FALSE, fig.align='center'}
+knitr::include_graphics("plots/image1_kplot.png")
+```
+
+
+# Image 2
+## Original image
+```{r echo=FALSE, fig.align='center'}
+knitr::include_graphics("original_images/image2.png")
+```
+
+## Image Approximations
+### k = 1
+```{r echo=FALSE, fig.align='center'}
+knitr::include_graphics("image_approximations/image2_1.png")
+```
+
+### k = 2
+```{r echo=FALSE, fig.align='center'}
+knitr::include_graphics("image_approximations/image2_2.png")
+```
+
+### k = 3
+```{r echo=FALSE, fig.align='center'}
+knitr::include_graphics("image_approximations/image2_3.png")
+```
+
+### k = 4
+```{r echo=FALSE, fig.align='center'}
+knitr::include_graphics("image_approximations/image2_4.png")
+```
+
+### k = 5
+```{r echo=FALSE, fig.align='center'}
+knitr::include_graphics("image_approximations/image2_5.png")
+```
+
+### k = 6
+```{r echo=FALSE, fig.align='center'}
+knitr::include_graphics("image_approximations/image2_6.png")
+```
+
+### k = 7
+```{r echo=FALSE, fig.align='center'}
+knitr::include_graphics("image_approximations/image2_7.png")
+```
+
+### k = 8
+```{r echo=FALSE, fig.align='center'}
+knitr::include_graphics("image_approximations/image2_8.png")
+```
+
+### k = 9
+```{r echo=FALSE, fig.align='center'}
+knitr::include_graphics("image_approximations/image2_9.png")
+```
+
+### k = 10
+```{r echo=FALSE, fig.align='center'}
+knitr::include_graphics("image_approximations/image2_10.png")
+```
+
+The image look sufficiently good at k = 1, most approximations after that look fairly similar.
+
+## K vs. Error plot
+```{r echo=FALSE, fig.align='center'}
+knitr::include_graphics("plots/image2_kplot.png")
+```
+
+# Image 3
+## Original image
+```{r echo=FALSE, fig.align='center'}
+knitr::include_graphics("original_images/image3.png")
+```
+
+## Image Approximations
+### k = 1
+```{r echo=FALSE, fig.align='center'}
+knitr::include_graphics("image_approximations/image3_1.png")
+```
+
+### k = 2
+```{r echo=FALSE, fig.align='center'}
+knitr::include_graphics("image_approximations/image3_2.png")
+```
+
+### k = 3
+```{r echo=FALSE, fig.align='center'}
+knitr::include_graphics("image_approximations/image3_3.png")
+```
+
+### k = 4
+```{r echo=FALSE, fig.align='center'}
+knitr::include_graphics("image_approximations/image3_4.png")
+```
+
+### k = 5
+```{r echo=FALSE, fig.align='center'}
+knitr::include_graphics("image_approximations/image3_5.png")
+```
+
+### k = 6
+```{r echo=FALSE, fig.align='center'}
+knitr::include_graphics("image_approximations/image3_6.png")
+```
+
+### k = 7
+```{r echo=FALSE, fig.align='center'}
+knitr::include_graphics("image_approximations/image3_7.png")
+```
+
+### k = 8
+```{r echo=FALSE, fig.align='center'}
+knitr::include_graphics("image_approximations/image3_8.png")
+```
+
+### k = 9
+```{r echo=FALSE, fig.align='center'}
+knitr::include_graphics("image_approximations/image3_9.png")
+```
+
+### k = 10
+```{r echo=FALSE, fig.align='center'}
+knitr::include_graphics("image_approximations/image3_10.png")
+```
+
+The image looks sufficiently good at k = 10, it captures the shape and shadows of the puppy at that point without extra details.
+
+## K vs. Error plot
+```{r echo=FALSE, fig.align='center'}
+knitr::include_graphics("plots/image3_kplot.png")
+```
+
+# Image 4
+## Original image
+```{r echo=FALSE, fig.align='center'}
+knitr::include_graphics("original_images/image4.png")
+```
+
+## Image Approximations
+### k = 1
+```{r echo=FALSE, fig.align='center'}
+knitr::include_graphics("image_approximations/image4_1.png")
+```
+
+### k = 2
+```{r echo=FALSE, fig.align='center'}
+knitr::include_graphics("image_approximations/image4_2.png")
+```
+
+### k = 3
+```{r echo=FALSE, fig.align='center'}
+knitr::include_graphics("image_approximations/image4_3.png")
+```
+
+### k = 4
+```{r echo=FALSE, fig.align='center'}
+knitr::include_graphics("image_approximations/image4_4.png")
+```
+
+### k = 5
+```{r echo=FALSE, fig.align='center'}
+knitr::include_graphics("image_approximations/image4_5.png")
+```
+
+### k = 6
+```{r echo=FALSE, fig.align='center'}
+knitr::include_graphics("image_approximations/image4_6.png")
+```
+
+### k = 7
+```{r echo=FALSE, fig.align='center'}
+knitr::include_graphics("image_approximations/image4_7.png")
+```
+
+### k = 8
+```{r echo=FALSE, fig.align='center'}
+knitr::include_graphics("image_approximations/image4_8.png")
+```
+
+### k = 9
+```{r echo=FALSE, fig.align='center'}
+knitr::include_graphics("image_approximations/image4_9.png")
+```
+
+### k = 10
+```{r echo=FALSE, fig.align='center'}
+knitr::include_graphics("image_approximations/image4_10.png")
+```
+
+The image approximation seems sufficiently good at k = 4, the original image has little details besides the few blobs with that approximation onwards captures.
+
+## K vs. Error plot
+```{r echo=FALSE, fig.align='center'}
+knitr::include_graphics("plots/image4_kplot.png")
+```
