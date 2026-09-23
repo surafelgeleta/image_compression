@@ -162,6 +162,8 @@ knitr::include_graphics("plots/image1_eigen.png")
 knitr::include_graphics("plots/image1_pc.png")
 ```
 
+The eigenvector plot shows a massive spike at around the 77th index, which may correspond with the pixels forming the single line across the image. The PC score plot displays a consistent pattern of upward and downward spikes, which suggests a consistent level of noise across the image.
+
 # Image 2
 ## Original image
 ```{r echo=FALSE, fig.align='center'}
@@ -234,6 +236,8 @@ knitr::include_graphics("plots/image2_eigen.png")
 ```{r echo=FALSE, fig.align='center'}
 knitr::include_graphics("plots/image2_pc.png")
 ```
+
+The eigenvector plot is a linear, downward sloping line, suggesting that the weights forming the first PC are decreasing with every next variable. This makes sense, because the bottom of the image has much less details compared to the upper part of the image. The PC score plot shows a similar oscillating pattern, but several spikes appear incongruent with the rest of the plot which is an indication of the inconsistency of noise in the image.
 
 # Image 3
 ## Original image
@@ -308,6 +312,8 @@ knitr::include_graphics("plots/image3_eigen.png")
 knitr::include_graphics("plots/image3_pc.png")
 ```
 
+The eigenvector plot shows a series of dips, valleys, and peaks, with heights at the end and dips around the middle of the graph. These varied coefficients are an indication of the complexity of representing the image. The PC plot appears to be an inverse of the eigenvector plot, with one main peak around indices 120, and generally decreasing afterwards. 
+
 # Image 4
 ## Original image
 ```{r echo=FALSE, fig.align='center'}
@@ -380,3 +386,5 @@ knitr::include_graphics("plots/image4_eigen.png")
 ```{r echo=FALSE, fig.align='center'}
 knitr::include_graphics("plots/image4_pc.png")
 ```
+
+The eigenvector plot displays a single, large dip around indices 60-90, which may correspond with the red spot around that same area of the image. The PC plot also shows a dip around a similar region, as well as another smaller dip after index 50. These two dips probably correspond with the two colored spots in the image.
