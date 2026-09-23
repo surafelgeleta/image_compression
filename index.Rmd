@@ -153,6 +153,14 @@ The image approximation looks sufficient at k = 5, because at that point it capt
 knitr::include_graphics("plots/image1_kplot.png")
 ```
 
+## 1st Eigenvector and PC Score plots
+```{r echo=FALSE, fig.align='center'}
+knitr::include_graphics("plots/image1_eigen.png")
+```
+
+```{r echo=FALSE, fig.align='center'}
+knitr::include_graphics("plots/image1_pc.png")
+```
 
 # Image 2
 ## Original image
@@ -216,6 +224,15 @@ The image look sufficiently good at k = 1, most approximations after that look f
 ## K vs. Error plot
 ```{r echo=FALSE, fig.align='center'}
 knitr::include_graphics("plots/image2_kplot.png")
+```
+
+## 1st Eigenvector and PC Score plots
+```{r echo=FALSE, fig.align='center'}
+knitr::include_graphics("plots/image2_eigen.png")
+```
+
+```{r echo=FALSE, fig.align='center'}
+knitr::include_graphics("plots/image2_pc.png")
 ```
 
 # Image 3
@@ -282,6 +299,15 @@ The image looks sufficiently good at k = 10, it captures the shape and shadows o
 knitr::include_graphics("plots/image3_kplot.png")
 ```
 
+## 1st Eigenvector and PC Score plots
+```{r echo=FALSE, fig.align='center'}
+knitr::include_graphics("plots/image3_eigen.png")
+```
+
+```{r echo=FALSE, fig.align='center'}
+knitr::include_graphics("plots/image3_pc.png")
+```
+
 # Image 4
 ## Original image
 ```{r echo=FALSE, fig.align='center'}
@@ -344,4 +370,13 @@ The image approximation seems sufficiently good at k = 4, the original image has
 ## K vs. Error plot
 ```{r echo=FALSE, fig.align='center'}
 knitr::include_graphics("plots/image4_kplot.png")
+```
+
+## 1st Eigenvector and PC Score plots
+```{r echo=FALSE, fig.align='center'}
+knitr::include_graphics("plots/image4_eigen.png")
+```
+
+```{r echo=FALSE, fig.align='center'}
+knitr::include_graphics("plots/image4_pc.png")
 ```
